@@ -8,20 +8,20 @@ import (
 
 const maxNumber = 10000000000
 
-type number struct {
-	num int
+type Number struct {
+	Num int
 }
 
-func (numb *number) squar() int {
-	return numb.num * numb.num
+func (numb *Number) Squar() int {
+	return numb.Num * numb.Num
 }
-func getArray(n int) (arr []string) {
-	var numb number
+func GetArray(n int) (arr []string) {
+	var numb Number
 	var s string
 	for i := 0; ; i++ {
-		numb.num = i
-		if numb.squar() < n {
-			s = strconv.Itoa(numb.num)
+		numb.Num = i
+		if numb.Squar() < n {
+			s = strconv.Itoa(numb.Num)
 			arr = append(arr, s)
 		} else {
 			break
@@ -49,7 +49,7 @@ func start() {
 			break
 		}
 	}
-	printArr(getArray(n))
+	printArr(GetArray(n))
 }
 func main() {
 	start()

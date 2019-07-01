@@ -7,7 +7,7 @@ import (
 //const maxNumber=1000000000000
 var hunds = [10]string{"","сто ","двести ","триста ","четыреста ","пятьсот ","шестьсот ","семьсот ","восемьсот ","девятьсот "}
 var tens = [10]string{"","десять ","двадцать ","тридцать ","сорок ","пятьдесят ","шестьдесят ","семьдесят ","восемьдесят ","девяносто "}
-func initVal(val int, male bool, one, two, five string)(str string){
+func InitVal(val int, male bool, one, two, five string)(str string){
 	frac20:=[20]string{"","один ","два ","три ","четыре ","пять ","шесть ","семь ","восемь ","девять ","десять ","одиннадцать ","двенадцать ","тринадцать ","четырнадцать ","пятнадцать ","шестнадцать ","семнадцать ","восемьнадцать ","девятнадцать "}
 	var num=val%1000
 	if num==0{return ""}
@@ -24,10 +24,10 @@ func initVal(val int, male bool, one, two, five string)(str string){
 		str+=tens[num%100/10]
 		str+=frac20[num%10]
 	}
-	str+=correctEnd(num,one,two,five)
+	str+=CorrectEnd(num,one,two,five)
 	return str
 }
-func correctEnd(val int,one,two,five string)string{
+func CorrectEnd(val int,one,two,five string)string{
 	t:=val%100
 	if t>20{
 		t = val%10
@@ -41,10 +41,10 @@ func correctEnd(val int,one,two,five string)string{
 	}
 	return ""
 }
-func reverse(s,s1 string) (result string) {
+func Reverse(s,s1 string) (result string) {
 	return s1+s
 }
-func stringValue(value int)(str string){
+func StringValue(value int)(str string){
 	minus:=false
 	if value<0{
 		value = -value
@@ -52,19 +52,19 @@ func stringValue(value int)(str string){
 	}
 	n:=value
 	if n==0{str+="ноль"}
-	if n%1000!=0{str+=initVal(n,true,"","","")}
+	if n%1000!=0{str+=InitVal(n,true,"","","")}
 	n/=1000
-	newStr:=reverse(str,initVal(n,false,"тысяча ","тысячи ","тысяч "))
+	newStr:=Reverse(str,InitVal(n,false,"тысяча ","тысячи ","тысяч "))
 	n/=1000
-	newStr=reverse(newStr,initVal(n,true,"миллион ","миллиона ","миллионов "))
+	newStr=Reverse(newStr,InitVal(n,true,"миллион ","миллиона ","миллионов "))
 	n/=1000
-	newStr=reverse(newStr,initVal(n,true,"миллиард ","миллиарда ","миллиардов "))
+	newStr=Reverse(newStr,InitVal(n,true,"миллиард ","миллиарда ","миллиардов "))
 	n/= 1000;
-	newStr=reverse(newStr,initVal(n, true, "триллион ", "триллиона ", "триллионов "));
+	newStr=Reverse(newStr,InitVal(n, true, "триллион ", "триллиона ", "триллионов "));
 	n /= 1000;
-	newStr=reverse(newStr,initVal(n, true, "триллиард ", "триллиарда ", "триллиардов "));
+	newStr=Reverse(newStr,InitVal(n, true, "триллиард ", "триллиарда ", "триллиардов "));
 	if minus {
-		newStr=reverse(newStr,"минус ")
+		newStr=Reverse(newStr,"минус ")
 	}
 	return newStr
 }
@@ -88,5 +88,5 @@ func getAnswer()int{
 }
 func main(){
 	n:=getAnswer()
-	fmt.Print(stringValue(n))
+	fmt.Print(StringValue(n))
 }
