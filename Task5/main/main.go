@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 )
-const maxNumber=1000000000000
+//const maxNumber=1000000000000
 var hunds = [10]string{"","сто ","двести ","триста ","четыреста ","пятьсот ","шестьсот ","семьсот ","восемьсот ","девятьсот "}
 var tens = [10]string{"","десять ","двадцать ","тридцать ","сорок ","пятьдесят ","шестьдесят ","семьдесят ","восемьдесят ","девяносто "}
 func initVal(val int, male bool, one, two, five string)(str string){
@@ -59,6 +59,10 @@ func stringValue(value int)(str string){
 	newStr=reverse(newStr,initVal(n,true,"миллион ","миллиона ","миллионов "))
 	n/=1000
 	newStr=reverse(newStr,initVal(n,true,"миллиард ","миллиарда ","миллиардов "))
+	n/= 1000;
+	newStr=reverse(newStr,initVal(n, true, "триллион ", "триллиона ", "триллионов "));
+	n /= 1000;
+	newStr=reverse(newStr,initVal(n, true, "триллиард ", "триллиарда ", "триллиардов "));
 	if minus {
 		newStr=reverse(newStr,"минус ")
 	}
@@ -74,7 +78,7 @@ func getAnswer()int{
 	for {
 		fmt.Scan(&str)
 		n, err = strconv.Atoi(str)
-		if err != nil || n > maxNumber {
+		if err != nil {
 			fmt.Print("Please, write the correct value\n")
 		} else {
 			break

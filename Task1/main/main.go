@@ -9,12 +9,14 @@ type chessBoard struct {
 	width, length int
 }
 
+const minVal  = 0
+const maxVal=100
 func isValidVal(value *int) bool {
 	var str string
 	fmt.Scanf("%s", &str)
 	n, err := strconv.Atoi(str)
-	if err != nil || n <= 0 || n > 120 {
-		fmt.Printf("Please, enter a correct value. It must be an unsigned integer number, less than 120\n")
+	if err != nil || n <= minVal || n > maxVal {
+		fmt.Printf("Please, enter a correct value. It must be an unsigned integer number, less than 100\n")
 		return false
 	} else {
 		*value = n
