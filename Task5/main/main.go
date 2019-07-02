@@ -6,34 +6,76 @@ import (
 )
 
 //const maxNumber=1000000000000
-var hunds = [10]string{"", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ", "семьсот ", "восемьсот ", "девятьсот "}
-var tens = [10]string{"", "десять ", "двадцать ", "тридцать ", "сорок ", "пятьдесят ", "шестьдесят ", "семьдесят ", "восемьдесят ", "девяносто "}
-
-func InitVal(val int, male bool, one, two, five string) (str string) {
-	frac20 := [20]string{"", "один ", "два ", "три ", "четыре ", "пять ", "шесть ", "семь ", "восемь ", "девять ", "десять ", "одиннадцать ", "двенадцать ", "тринадцать ", "четырнадцать ", "пятнадцать ", "шестнадцать ", "семнадцать ", "восемьнадцать ", "девятнадцать "}
+var hunds = []string{
+	"",
+	"сто ",
+	"двести ",
+	"триста ",
+	"четыреста ",
+	"пятьсот ", "шестьсот ",
+	"семьсот ",
+	"восемьсот ",
+	"девятьсот ",
+}
+var tens = []string{
+	"",
+	"десять ",
+	"двадцать ",
+	"тридцать ",
+	"сорок ",
+	"пятьдесят ",
+	"шестьдесят ",
+	"семьдесят ",
+	"восемьдесят ",
+	"девяносто ",
+}
+var part20 = []string{
+	"",
+	"один ",
+	"два ",
+	"три ",
+	"четыре ",
+	"пять ",
+	"шесть ",
+	"семь ",
+	"восемь ",
+	"девять ",
+	"десять ",
+	"одиннадцать ",
+	"двенадцать ",
+	"тринадцать ",
+	"четырнадцать ",
+	"пятнадцать ",
+	"шестнадцать ",
+	"семнадцать ",
+	"восемьнадцать ",
+	"девятнадцать ",
+}
+func initVal(val int, male bool, one, two, five string) (str string) {
 	var num = val % 1000
-	if num == 0 {
-		return ""
-	}
-	if num < 0 {
+	if num <= 0 {
 		return ""
 	}
 	if !male {
-		frac20[1] = "одна "
-		frac20[2] = "две "
+		part20[1] = "одна "
+		part20[2] = "две "
+	}else{
+		part20[1]="один "
+		part20[2]="два "
 	}
 	str = hunds[num/100]
 
 	if num%100 < 20 {
-		str += frac20[num%100]
+		str += part20[num%100]
 	} else {
 		str += tens[num%100/10]
-		str += frac20[num%10]
+		str += part20[num%10]
 	}
-	str += CorrectEnd(num, one, two, five)
+	str += correctEnd(num, one, two, five)
 	return str
 }
-func CorrectEnd(val int, one, two, five string) string {
+//Choosing the right case ending noun
+func correctEnd(val int, one, two, five string) string {
 	t := val % 100
 	if t > 20 {
 		t = val % 10
@@ -48,12 +90,11 @@ func CorrectEnd(val int, one, two, five string) string {
 	default:
 		return five
 	}
-	return ""
 }
-func Reverse(s, s1 string) (result string) {
+func append(s, s1 string) (result string) {
 	return s1 + s
 }
-func StringValue(value int) (str string) {
+func stringValue(value int) (str string) {
 	minus := false
 	if value < 0 {
 		value = -value
@@ -64,20 +105,20 @@ func StringValue(value int) (str string) {
 		str += "ноль"
 	}
 	if n%1000 != 0 {
-		str += InitVal(n, true, "", "", "")
+		str += initVal(n, true, "", "", "")
 	}
 	n /= 1000
-	newStr := Reverse(str, InitVal(n, false, "тысяча ", "тысячи ", "тысяч "))
+	newStr := append(str, initVal(n, false, "тысяча ", "тысячи ", "тысяч "))
 	n /= 1000
-	newStr = Reverse(newStr, InitVal(n, true, "миллион ", "миллиона ", "миллионов "))
+	newStr = append(newStr, initVal(n, true, "миллион ", "миллиона ", "миллионов "))
 	n /= 1000
-	newStr = Reverse(newStr, InitVal(n, true, "миллиард ", "миллиарда ", "миллиардов "))
+	newStr = append(newStr, initVal(n, true, "миллиард ", "миллиарда ", "миллиардов "))
 	n /= 1000
-	newStr = Reverse(newStr, InitVal(n, true, "триллион ", "триллиона ", "триллионов "))
+	newStr = append(newStr, initVal(n, true, "триллион ", "триллиона ", "триллионов "))
 	n /= 1000
-	newStr = Reverse(newStr, InitVal(n, true, "триллиард ", "триллиарда ", "триллиардов "))
+	newStr = append(newStr, initVal(n, true, "триллиард ", "триллиарда ", "триллиардов "))
 	if minus {
-		newStr = Reverse(newStr, "минус ")
+		newStr = append(newStr, "минус ")
 	}
 	return newStr
 }
@@ -102,5 +143,5 @@ func getAnswer() int {
 }
 func main() {
 	n := getAnswer()
-	fmt.Print(StringValue(n))
+	fmt.Print(stringValue(n))
 }
